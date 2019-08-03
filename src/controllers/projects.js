@@ -12,5 +12,17 @@ module.exports = {
     } catch (err) {
       next({ code: 500, message: "Projects could not be retrieved." });
     }
+  },
+  one: async (req, res, next) => {
+    try {
+      const project = await pm.get(req.params.id);
+
+      if (!project)
+        next({ code: 404, message: "This project does not exist." });
+      else
+        res.status(200).json({ project, success: true });
+    } catch (err) {
+      next({ code: 500, message: "Project could not be retrieved." });
+    }
   }
-}
+};
