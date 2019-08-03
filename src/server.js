@@ -1,3 +1,4 @@
+const errorHandler = require('./middleware/errorHandler');
 const express = require('express');
 
 const server = express();
@@ -12,5 +13,7 @@ server.get('/', (req, res) => {
 });
 
 server.use('/api', require('./routes'));
+
+server.use(errorHandler);
 
 module.exports = server;
