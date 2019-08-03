@@ -38,7 +38,9 @@ module.exports = {
         next({ code: 400, message: "Missing required name or description field." });
       
       const newProject = await pm.insert(data); 
-      if (newProject) res.status(201).json({ newProject, success: true });
+
+      if (newProject) 
+        res.status(201).json({ newProject, success: true });
     } catch (err) {
       next({ code: 500, message: "Project could not be saved." });
     }
@@ -67,7 +69,11 @@ module.exports = {
         next({ code: 400, message: "Missing project data." });
 
       const updatedProject = await pm.update(id, data); 
-      if (updatedProject) res.status(200).json({ updatedProject, success: true });
+
+      if (!updatedProject)
+        next({ code: 400, message: "PThis project does not exist." });
+      else
+        res.status(200).json({ updatedProject, success: true });
     } catch (err) {
       next({ code: 500, message: "Project could not be updated." });
     }
