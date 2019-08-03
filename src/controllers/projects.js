@@ -13,6 +13,26 @@ module.exports = {
       next({ code: 500, message: "Projects could not be retrieved." });
     }
   },
+  actions: async (req, res, next) => {
+    const { id } = req.params;
+
+    try {
+      const project = await pm.get(id);
+
+      if (!project) {
+        next({ code: 404, message: "This project does not exist." });
+      } else {
+        const actions = await pm.getProjectActions(id);
+
+        if (actions.length === 0)
+          next({ code: 404, message: "This project has no actions." });
+        else
+          res.status(200).json({ actions, success: true });
+      }
+    } catch (err) {
+      next({ code: 500, message: "This project's actions could not be retrieved." });
+    }
+  },
   one: async (req, res, next) => {
     try {
       const project = await pm.get(req.params.id);
