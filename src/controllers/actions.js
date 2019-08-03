@@ -1,4 +1,5 @@
 const am = require('../models/actions');
+const pm = require('../models/projects');
 
 module.exports = {
   all: async (req, res, next) => {
@@ -23,6 +24,30 @@ module.exports = {
         res.status(200).json({ action, success: true });
     } catch (err) {
       next({ code: 500, message: "Action could not be retrieved." });
+    }
+  },
+  new: async (req, res, next) => {
+    const data = req.body;
+    const length = Object.keys(data).length;
+    const { project_id, description, notes } = data;
+        
+    try { 
+      const project = await pm.get(project_id);
+      
+      if (!project) {
+        next({ code: 404, message: "This project does not exist." });
+      } else {
+        if (length === 0)
+          next({ code: 400, message: "Missing action data." }); 
+  
+        if (length > 0 && !project_id || !description || !notes)
+          next({ code: 400, message: "Missing required project_id, description, or notes field." });
+        
+        const newAction = await am.insert(data); 
+        if (newAction) res.status(201).json({ action: newAction, success: true });
+      }
+    } catch (err) {
+      next({ code: 500, message: "Action could not be saved." });
     }
   }
 };
