@@ -44,7 +44,9 @@ module.exports = {
           next({ code: 400, message: "Missing required project_id, description, or notes field." });
         
         const newAction = await am.insert(data); 
-        if (newAction) res.status(201).json({ action: newAction, success: true });
+
+        if (newAction) 
+          res.status(201).json({ action: newAction, success: true });
       }
     } catch (err) {
       next({ code: 500, message: "Action could not be saved." });
