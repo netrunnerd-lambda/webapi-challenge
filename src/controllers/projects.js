@@ -56,5 +56,20 @@ module.exports = {
     } catch (err) {
       next({ code: 500, message: "Project could not be deleted." });
     }
-  }
+  },
+  update: async (req, res, next) => {
+    const { id } = req.params;
+    const data = req.body;
+    const length = Object.keys(data).length;
+    
+    if (length === 0)
+      next({ code: 400, message: "Missing project data." });
+
+    try { 
+      const updatedProject = await pm.update(id, data); 
+      if (updatedProject) res.status(200).json({ updatedProject, success: true });
+    } catch (err) {
+      next({ code: 500, message: "Project could not be updated." });
+    }
+  },
 };
