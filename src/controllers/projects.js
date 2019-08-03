@@ -24,5 +24,23 @@ module.exports = {
     } catch (err) {
       next({ code: 500, message: "Project could not be retrieved." });
     }
+  },
+  new: async (req, res, next) => {
+    const data = req.body;
+    const length = Object.keys(data).length;
+    const { name, description } = data;
+    
+    if (length === 0)
+      next({ code: 400, message: "Missing project data." }); 
+
+    if (length > 0 && !name || !description)
+      next({ code: 400, message: "Missing required name or description field." });
+
+    try { 
+      const newProject = await pm.insert(data); 
+      if (newProject) res.status(201).json({ newProject, success: true });
+    } catch (err) {
+      next({ code: 500, message: "Project could not be saved." });
+    }
   }
 };
