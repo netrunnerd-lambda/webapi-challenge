@@ -29,14 +29,14 @@ module.exports = {
     const data = req.body;
     const length = Object.keys(data).length;
     const { name, description } = data;
-    
-    if (length === 0)
-      next({ code: 400, message: "Missing project data." }); 
-
-    if (length > 0 && !name || !description)
-      next({ code: 400, message: "Missing required name or description field." });
-
+        
     try { 
+      if (length === 0)
+        next({ code: 400, message: "Missing project data." }); 
+  
+      if (length > 0 && !name || !description)
+        next({ code: 400, message: "Missing required name or description field." });
+      
       const newProject = await pm.insert(data); 
       if (newProject) res.status(201).json({ newProject, success: true });
     } catch (err) {
@@ -61,11 +61,11 @@ module.exports = {
     const { id } = req.params;
     const data = req.body;
     const length = Object.keys(data).length;
-    
-    if (length === 0)
-      next({ code: 400, message: "Missing project data." });
 
     try { 
+      if (length === 0)
+        next({ code: 400, message: "Missing project data." });
+
       const updatedProject = await pm.update(id, data); 
       if (updatedProject) res.status(200).json({ updatedProject, success: true });
     } catch (err) {
