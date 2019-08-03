@@ -6,5 +6,6 @@ const actions = require('../controllers/actions');
 router.get('/', actions.all);
 router.get('/:id', actions.one);
 router.post('/', actions.new);
+router.delete('/:id', actions.rm);
 
 module.exports = router;

@@ -49,5 +49,19 @@ module.exports = {
     } catch (err) {
       next({ code: 500, message: "Action could not be saved." });
     }
+  },
+  rm: async (req, res, next) => {
+    const { id } = req.params;
+
+    try {
+      const deleted = await am.remove(id);
+
+      if (!deleted)
+        next({ code: 400, message: "This action does not exist." });
+      else
+        res.status(200).json({ message: `Action ID ${id} deleted.`, success: true });
+    } catch (err) {
+      next({ code: 500, message: "Action could not be deleted." });
+    }
   }
 };
