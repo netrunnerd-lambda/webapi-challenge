@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
   });
 });
 
+router.use('/actions', require('./actions'));
 router.use('/projects', require('./projects'));
 
 module.exports = router;
