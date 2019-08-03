@@ -63,5 +63,24 @@ module.exports = {
     } catch (err) {
       next({ code: 500, message: "Action could not be deleted." });
     }
+  },
+  update: async (req, res, next) => {
+    const { id } = req.params;
+    const data = req.body;
+    const length = Object.keys(data).length;
+
+    try { 
+      if (length === 0)
+        next({ code: 400, message: "Missing action data." });
+
+      const updatedAction = await am.update(id, data); 
+
+      if (!updatedAction)
+        next({ code: 400, message: "This action does not exist." });
+      else 
+        res.status(200).json({ action: updatedAction, success: true });
+    } catch (err) {
+      next({ code: 500, message: "Action could not be updated." });
+    }
   }
 };
