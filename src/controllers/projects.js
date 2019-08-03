@@ -42,5 +42,19 @@ module.exports = {
     } catch (err) {
       next({ code: 500, message: "Project could not be saved." });
     }
+  },
+  rm: async (req, res, next) => {
+    const { id } = req.params;
+
+    try {
+      const deleted = await pm.remove(id);
+
+      if (!deleted)
+        next({ code: 400, message: "This project does not exist." });
+      else
+        res.status(200).json({ message: `Project ID ${id} deleted.`, success: true });
+    } catch (err) {
+      next({ code: 500, message: "Project could not be deleted." });
+    }
   }
 };
