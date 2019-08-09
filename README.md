@@ -26,7 +26,7 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [x] Mention two parts of Express that you learned about this week.
 
-Routing & Middleware.
+Routing & Middleware... We learned to map URL's to what are essentially middleware functions that make calls to the database with the help of a query builder. As well as actual middleware that performed error handling, and data validation. For example, confirming whether or not the required fields for a new entry were in place before sending out the call.
 
 - [x] Describe Middleware?
 
@@ -34,7 +34,7 @@ Middleware handles different aspects of an application through functions that ca
 
 - [x] Describe a Resource?
 
-"Everything is a resource." Literally everything that is exposed and operated on through the use of an API.
+"Everything is a resource." Literally everything that is exposed and operated on through the use of an API. Like accounts, posts or even recipes for ma's fried chicken. If there's an endpoint for it, it's a resource.
 
 - [x] What can the API return to help clients know if a request was successful?
 
